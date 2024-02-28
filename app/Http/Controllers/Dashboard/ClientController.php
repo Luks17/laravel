@@ -26,7 +26,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Dashboard/Clients/Create");
+        return Inertia::render("Dashboard/Clients/Form");
     }
 
     /**
@@ -47,7 +47,13 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if(!$client = Client::find($id)) {
+            return back();
+        }
+        
+        return Inertia::render("Dashboard/Clients/Show", [
+            "client" => $client
+        ]);
     }
 
     /**
@@ -55,7 +61,13 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if(!$client = Client::find($id)) {
+            return back();
+        }
+        
+        return Inertia::render("Dashboard/Clients/Form", [
+            "client" => $client
+        ]);
     }
 
     /**
@@ -63,7 +75,15 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if(!$client = Client::find($id)) {
+            return back();
+        }
+        
+        $client->update($request->only([
+            "name", "phone_number"
+        ]));
+        
+        return redirect()->route("dashboard.clients");
     }
 
     /**
@@ -71,6 +91,12 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(!$client = Client::find($id)) {
+            return back();
+        }
+        
+        $client->delete();
+
+        return redirect()->route("dashboard.clients");
     }
 }

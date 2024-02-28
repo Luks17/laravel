@@ -1,16 +1,20 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 
-export default function Clients({ auth }) {
-    const {data, setData, post, processing, errors} = useForm({
-        name: "",
-        phone_number: "",
-        email: "",
+export default function Form({ auth, client }) {
+    const {data, setData, post, put, processing, errors} = useForm({
+        name: client ? client.name : "",
+        phone_number: client ? client.phone_number : "",
+        email: client ? client.email : "",
     });
     
     function handleSubmit(e) {
         e.preventDefault();
-        post(route("dashboard.clients.store"));
+        
+        if (client === undefined)
+            post(route("dashboard.clients.store"));
+        else
+            put(route("dashboard.clients.update", client.id));
     }
 
     return (
@@ -28,6 +32,13 @@ export default function Clients({ auth }) {
                     <div className="bg-white dark:bg-gray-800 w-1/2 mx-auto overflow-hidden shadow-sm sm:rounded-lg">
                         <form onSubmit={handleSubmit} className="flex flex-col gap-y-5 py-10 items-center">
                             <label className="flex flex-col">
+                                <span className="text-gray-200">Endereço de E-mail</span>
+                                <input type="email" placeholder="fulano.exemplo@mail.com" value={data.email}
+                                    onChange={e => setData("email", e.target.value)}
+                                    disabled={client !== undefined}
+                                    className={`form-input rounded-md shadow-sm ${client !== undefined && "opacity-70"}`} />
+                            </label>
+                            <label className="flex flex-col">
                                 <span className="text-gray-200">Nome do Cliente</span>
                                 <input type="text" placeholder="" value={data.name}
                                     onChange={e => setData("name", e.target.value)}
@@ -37,12 +48,6 @@ export default function Clients({ auth }) {
                                 <span className="text-gray-200">Número de telefone</span>
                                 <input type="text" placeholder="" value={data.phone_number}
                                     onChange={e => setData("phone_number", e.target.value)}
-                                    className="form-input rounded-md shadow-sm" />
-                            </label>
-                            <label className="flex flex-col">
-                                <span className="text-gray-200">Endereço de E-mail</span>
-                                <input type="email" placeholder="fulano.exemplo@mail.com" value={data.email}
-                                    onChange={e => setData("email", e.target.value)}
                                     className="form-input rounded-md shadow-sm" />
                             </label>
                             
