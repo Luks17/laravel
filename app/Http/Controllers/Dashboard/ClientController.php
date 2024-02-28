@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\DTO\Client\CreateClientDTO;
+use App\DTO\Client\UpdateClientDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateClientRequest;
-use App\Models\Client;
+use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ClientController extends Controller
 {
+    public function __construct(protected ClientService $service)
+    {}
+        
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all();
+        $clients = $this->service->getAll($request->filter);
 
         return Inertia::render("Dashboard/Clients/Index", [
             "clients" => $clients
@@ -35,10 +41,7 @@ class ClientController extends Controller
      */
     public function store(StoreUpdateClientRequest $request)
     {
-        $data = $request->all();
-        $data["status"] = "a";
- 
-        Client::create($data);
+        $this->service->new(CreateClientDTO::fromRequest($request));
         
         return redirect()->route("dashboard.clients");
     }
@@ -48,7 +51,7 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        if(!$client = Client::find($id)) {
+        if(!$client = $this->service->findOne($id)) {
             return back();
         }
         
@@ -62,7 +65,7 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        if(!$client = Client::find($id)) {
+        if(!$client = $this->service->findOne($id)) {
             return back();
         }
         
@@ -76,13 +79,11 @@ class ClientController extends Controller
      */
     public function update(StoreUpdateClientRequest $request, string $id)
     {
-        if(!$client = Client::find($id)) {
+        $client = $this->service->update(UpdateClientDTO::fromRequest($request, $id));
+
+        if(!$client) {
             return back();
         }
-        
-        $client->update($request->only([
-            "name", "phone_number"
-        ]));
         
         return redirect()->route("dashboard.clients");
     }
@@ -92,11 +93,7 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        if(!$client = Client::find($id)) {
-            return back();
-        }
-        
-        $client->delete();
+        $this->service->delete($id);
 
         return redirect()->route("dashboard.clients");
     }
