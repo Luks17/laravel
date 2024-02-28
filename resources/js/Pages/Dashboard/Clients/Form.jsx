@@ -37,18 +37,22 @@ export default function Form({ auth, client }) {
                                     onChange={e => setData("email", e.target.value)}
                                     disabled={client !== undefined}
                                     className={`form-input rounded-md shadow-sm ${client !== undefined && "opacity-70"}`} />
+                                
+                                {errors.email !== undefined && <span className="text-red-500">{errors.email}</span>}
                             </label>
                             <label className="flex flex-col">
                                 <span className="text-gray-200">Nome do Cliente</span>
                                 <input type="text" placeholder="" value={data.name}
                                     onChange={e => setData("name", e.target.value)}
                                     className="form-input rounded-md shadow-sm" />
+                                {errors.name !== undefined && <span className="text-red-500">{errors.name}</span>}
                             </label>
                             <label className="flex flex-col">
                                 <span className="text-gray-200">Número de telefone</span>
                                 <input type="text" placeholder="" value={data.phone_number}
                                     onChange={e => setData("phone_number", e.target.value)}
                                     className="form-input rounded-md shadow-sm" />
+                                {errors.phone_number !== undefined && <span className="text-red-500">{errors.phone_number}</span>}
                             </label>
                             
                             <button type="submit" disabled={processing}

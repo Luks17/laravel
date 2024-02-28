@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,7 +33,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUpdateClientRequest $request)
     {
         $data = $request->all();
         $data["status"] = "a";
@@ -73,7 +74,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateClientRequest $request, string $id)
     {
         if(!$client = Client::find($id)) {
             return back();
