@@ -9,17 +9,12 @@ use Inertia\Inertia;
 
 class ClientController extends Controller
 {
-    public readonly Client $client;
-    public function __construct()
-    {
-        $this->client = new Client();
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clients = $this->client->all();
+        $clients = Client::all();
 
         return Inertia::render("Dashboard/Clients/Index", [
             "clients" => $clients
@@ -39,7 +34,12 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data["status"] = "a";
+ 
+        Client::create($data);
+        
+        return redirect()->route("dashboard.clients");
     }
 
     /**

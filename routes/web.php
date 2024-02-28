@@ -21,10 +21,11 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard',  [DashboardController::class, "index"])->name("dashboard");
+
     Route::get("/dashboard/clients", [ClientController::class, "index"])->name("dashboard.clients");
     Route::get("/dashboard/clients/create", [ClientController::class, "create"])->name("dashboard.clients.create");
+    Route::post("/dashboard/clients", [ClientController::class, "store"])->name("dashboard.clients.store");
     
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

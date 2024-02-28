@@ -1,10 +1,18 @@
+import NavLink from "@/Components/NavLink";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
 export default function Clients({ auth, clients }) {
     return (
         <AuthenticatedLayout user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Listagem de Clientes</h2>}
+            header={
+                <div className="flex justify-between">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Listagem de Clientes</h2>
+                    <NavLink href={route('dashboard.clients.create')}>
+                        Novo Cliente
+                    </NavLink>
+                </div>
+            }
         >
             <Head title="Clients" />
 
