@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,13 +20,8 @@ Route::get('/', function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard/Index');
-    })->name('dashboard');
-
-    Route::get("/dashboard/clients", function () {
-        return Inertia::render("Dashboard/Clients");
-    })->name("clients");
+    Route::get('/dashboard',  [DashboardController::class, "index"])->name("dashboard");
+    Route::get("/dashboard/clients", [ClientController::class, "index"])->name("dashboard.clients");
     
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
