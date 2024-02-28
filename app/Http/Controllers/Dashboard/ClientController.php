@@ -21,7 +21,7 @@ class ClientController extends Controller
     {
         $clients = $this->client->all();
 
-        return Inertia::render("Dashboard/Clients", [
+        return Inertia::render("Dashboard/Clients/Index", [
             "clients" => $clients
         ]);
     }
@@ -31,7 +31,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("Dashboard/Clients/Create");
     }
 
     /**
