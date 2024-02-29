@@ -34,7 +34,7 @@ export default function Products({ auth, products }) {
                                         <td className="py-4 px-10">{product.name}</td>
                                         <td>{"R$" + (product.price / 100.0).toFixed(2)}</td>
                                         <td>{product.stock}</td>
-                                        <td><NavLink href={route("dashboard.products.show", product.id)}>Show</NavLink></td>
+                                        <td><NavLink href={route("dashboard.products.show", product.id)}>Visualizar</NavLink></td>
                                     </tr>
                                 )) : (
                                 <tr>
