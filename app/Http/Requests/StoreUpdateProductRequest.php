@@ -27,7 +27,7 @@ class StoreUpdateProductRequest extends FormRequest
             "price" => ["required", "numeric", "gt:0"],
             "stock" => ["required", "integer", "gte:0"]
         ];
-        if ($this->method() === 'PUT') {
+        if ($this->method() === 'PUT' || $this->method() === 'PATCH') {
             $rules['name'] = [
                 "required",
                 Rule::unique("products")->ignore($this->product ?? $this->id),

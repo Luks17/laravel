@@ -27,7 +27,7 @@ class StoreUpdateClientRequest extends FormRequest
             "name" => ["required", "min:3", "max:255"],
             "phone_number" => ["required", "min:8", "max:255"],
         ];
-        if ($this->method() === 'PUT') {
+        if ($this->method() === 'PUT' || $this->method() === 'PATCH') {
             $rules['email'] = [
                 "required",
                 "email",
