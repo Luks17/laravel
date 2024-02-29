@@ -9,7 +9,7 @@ class UpdateOrderDTO
     public function __construct(
         public string $id,
         public string $status,
-        public int $price_total,
+        public int $total_price
     )
     {
         
@@ -20,7 +20,7 @@ class UpdateOrderDTO
         return new self(
             $id,
             $request->status,
-            $request->price_total
+            $request->total_price
         );
     }
 }

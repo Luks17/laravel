@@ -21,7 +21,7 @@ export default function Form({ auth, product }) {
         <AuthenticatedLayout user={auth.user}
             header={
                 <div className="flex justify-between">
-                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Novo Produto</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{product ? "Alterar Produto" : "Novo Produto"}</h2>
                 </div>
             }
         >

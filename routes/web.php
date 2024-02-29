@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get("/dashboard/orders/{id}", [OrderController::class, "show"])->name("dashboard.orders.show");
     Route::get("/dashboard/orders/{id}/edit", [OrderController::class, "edit"])->name("dashboard.orders.edit");
 
-    Route::post("/dashboard/orders", [OrderController::class, "store"])->name("dashboard.orders.store");
+    Route::post("/dashboard/{id}/orders", [OrderController::class, "store"])->name("dashboard.orders.store");
     Route::put("/dashboard/orders/{id}/update", [OrderController::class, "update"])->name("dashboard.orders.update");
 
     Route::delete("/dashboard/orders/{id}", [OrderController::class, "destroy"])->name("dashboard.orders.destroy");

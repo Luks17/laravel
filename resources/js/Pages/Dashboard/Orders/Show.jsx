@@ -1,8 +1,24 @@
 import NavLink from "@/Components/NavLink";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { normalizeStatus } from "@/lib/enums/StatusEnum";
 import { Head, router } from "@inertiajs/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Show({ auth, order }) {
+    const [client, setClient] = useState(null);
+    
+    useEffect(() => {
+        if(client === null) {
+            axios
+                .get(`http://localhost/api/orders/${order.id}/client`, {
+                    headers: { Accept: "application/json" }
+                })
+                .then(res => setClient(res.data))
+                .catch(e => console.log(e))
+        }
+    }, []);
+
     function handleDelete(e) {
         e.preventDefault();
         router.delete(route("dashboard.orders.destroy", order.id));
@@ -30,8 +46,9 @@ export default function Show({ auth, order }) {
                         </div>
                         <ul className="flex flex-col">
                             <OrderItem label={"Id"} item={order.id} />
-                            <OrderItem label={"Status"} item={order.status} />
-                            <OrderItem  label={"Preço Total"} item={order.total_price} />
+                            <OrderItem label={"Cliente"} item={client ? client.data.name : ""} />
+                            <OrderItem label={"Status"} item={normalizeStatus(order.status)} />
+                            <OrderItem  label={"Preço Total"} item={(order.total_price / 100).toFixed(2)} />
                         </ul>
                     </div>
                 </div>

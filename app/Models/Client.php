@@ -14,4 +14,9 @@ class Client extends Model
         "phone_number",
         "email"
     ];
+    
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

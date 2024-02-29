@@ -38,9 +38,9 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUpdateOrderRequest $request)
+    public function store(StoreUpdateOrderRequest $request, string $client_id)
     {
-        $this->service->new(CreateOrderDTO::fromRequest($request));
+        $this->service->new(CreateOrderDTO::fromRequest($request, $client_id));
         
         return redirect()->route("dashboard.orders");
     }

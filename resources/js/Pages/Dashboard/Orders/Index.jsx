@@ -1,5 +1,6 @@
 import NavLink from "@/Components/NavLink";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { normalizeStatus } from "@/lib/enums/StatusEnum";
 import { Head } from "@inertiajs/react";
 
 export default function Orders({ auth, orders }) {
@@ -32,8 +33,8 @@ export default function Orders({ auth, orders }) {
                                 {orders.length > 0 ? orders.map((order, i) => (
                                     <tr key={i}>
                                         <td className="py-4 px-10">{order.id}</td>
-                                        <td>{order.status}</td>
-                                        <td>{order.total_price}</td>
+                                        <td>{normalizeStatus(order.status)}</td>
+                                        <td>{(order.total_price / 100).toFixed(2)}</td>
                                         <td><NavLink href={route("dashboard.orders.show", order.id)}>Visualizar</NavLink></td>
                                     </tr>
                                 )) : (

@@ -17,6 +17,7 @@ return new class extends Migration
             
             $table->bigInteger("total_price");
             $table->enum("status", array_column(PaymentStatus::cases(), "name"));
+            $table->foreignId("client_id")->constrained("clients");
 
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\Order\CreateOrderDTO;
 use App\DTO\Order\UpdateOrderDTO;
+use App\Models\Client;
 use App\Models\Order;
 use stdClass;
 
@@ -55,5 +56,17 @@ class OrderService
     public function delete(string $id): void
     {
         $this->model->findOrFail($id)->delete();
+    }
+    
+    public function getClient($id): stdClass | null {
+        if (!$order = $this->model->find($id)) {
+            return null;
+        }
+
+        if(!$client = Client::find($order->getAttribute("client_id")))
+        {
+            null;
+        }
+        return (object) $client->toArray();
     }
 }

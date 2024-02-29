@@ -12,7 +12,12 @@ class Order extends Model
     protected $fillable = [
         "total_price",
         "status",
+        "client_id",
     ];
+    
+    public function client() {
+        return $this->belongsTo(Client::class);
+    }
     
     public function products() {
         return $this->belongsToMany("App\Model\Product");

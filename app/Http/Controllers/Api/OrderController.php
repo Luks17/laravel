@@ -6,6 +6,7 @@ use App\DTO\Order\CreateOrderDTO;
 use App\DTO\Order\UpdateOrderDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateOrderRequest;
+use App\Http\Resources\ClientResource;
 use App\Http\Resources\OrderResource;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
@@ -15,6 +16,18 @@ class OrderController extends Controller
 {
     public function __construct(protected OrderService $service)
     {}
+
+    
+    public function client(string $id)
+    {
+        if(!$client = $this->service->getClient($id)) {
+            return response()->json([
+                "error" => "Not Found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
+        return new ClientResource($client);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,9 +41,9 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUpdateOrderRequest $request)
+    public function store(StoreUpdateOrderRequest $request, string $id)
     {
-        $order = $this->service->new(CreateOrderDTO::fromRequest($request));
+        $order = $this->service->new(CreateOrderDTO::fromRequest($request, $id));
         
         return new OrderResource($order);
     }

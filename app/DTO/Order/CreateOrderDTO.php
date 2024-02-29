@@ -8,17 +8,19 @@ class CreateOrderDTO
 {
     public function __construct(
         public string $status,
-        public int $price_total,
+        public int $total_price,
+        public string $client_id
     )
     {
         
     }
     
-    public static function fromRequest(StoreUpdateOrderRequest $request): self 
+    public static function fromRequest(StoreUpdateOrderRequest $request, string $client_id): self 
     {
         return new self(
             $request->status,
-            $request->price_total
+            $request->total_price,
+            $client_id
         );
     }
 }
