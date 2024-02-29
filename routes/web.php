@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\ClientController;
+use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -32,6 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::put("/dashboard/clients/{id}/update", [ClientController::class, "update"])->name("dashboard.clients.update");
     
     Route::delete("/dashboard/clients/{id}", [ClientController::class, "destroy"])->name("dashboard.clients.destroy");
+    
+
+    Route::get("/dashboard/products", [ProductController::class, "index"])->name("dashboard.products");
+    Route::get("/dashboard/products/create", [ProductController::class, "create"])->name("dashboard.products.create");
+    Route::get("/dashboard/products/{id}", [ProductController::class, "show"])->name("dashboard.products.show");
+    Route::get("/dashboard/products/{id}/edit", [ProductController::class, "edit"])->name("dashboard.products.edit");
+
+    Route::post("/dashboard/products", [ProductController::class, "store"])->name("dashboard.products.store");
+    Route::put("/dashboard/products/{id}/update", [ProductController::class, "update"])->name("dashboard.products.update");
+    
+    Route::delete("/dashboard/products/{id}", [ProductController::class, "destroy"])->name("dashboard.products.destroy");
 
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
